@@ -67,6 +67,7 @@ fun SearchBar(
             Text(stringResource(id = R.string.placeholder_search))
         },
         modifier = modifier//수정자로 모든 디자인, 느낌 동작 제어
+            //.fillMaxHeight() layout이 너무 늘어남
             .heightIn(min = 56.dp)
     )
 }
@@ -110,9 +111,32 @@ fun AlignYourBodyElement(
 // Step: Favorite collection card - Material Surface
 @Composable
 fun FavoriteCollectionCard(
+    @DrawableRes drawable: Int,
+    @StringRes text : Int,
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    Surface(
+        shape = MaterialTheme.shapes.small,
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.width(192.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.fc2_nature_meditations),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(56.dp)
+            )
+            Text(
+                text = stringResource(id = R.string.fc2_nature_meditations),
+                style = MaterialTheme.typography.h3,
+                //modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+    }
 }
 
 // Step: Align your body row - Arrangements
@@ -203,7 +227,9 @@ fun AlignYourBodyElementPreview() {
 fun FavoriteCollectionCardPreview() {
     MySootheTheme {
         FavoriteCollectionCard(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
+            text = R.string.fc2_nature_meditations,
+            drawable = R.drawable.fc2_nature_meditations
         )
     }
 }
