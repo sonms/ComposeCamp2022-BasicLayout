@@ -21,14 +21,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,7 +67,6 @@ fun SearchBar(
             Text(stringResource(id = R.string.placeholder_search))
         },
         modifier = modifier//수정자로 모든 디자인, 느낌 동작 제어
-            .fillMaxHeight()
             .heightIn(min = 56.dp)
     )
 }
@@ -71,9 +74,37 @@ fun SearchBar(
 // Step: Align your body - Alignment
 @Composable
 fun AlignYourBodyElement(
+    //이미지와 텍스트를 동적
+    @DrawableRes drawable: Int,
+    @StringRes text : Int,
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    //image, text 컴포저블이 필요, 세로방향 - column
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        Image(painter = painterResource(id = R.drawable.ab1_inversions),
+            //그냥 장식용이라 null로 설정
+            contentDescription = null,
+            //이미지의 사이즈 조절 (현재는 둥근형태, fit, fillbounds 등이 있다)
+            contentScale = ContentScale.Crop,
+            //수정자를 불러와 size와 clip으로 형태(shape)조절
+            modifier = Modifier
+                .size(88.dp)
+                .clip(CircleShape)
+        )
+        Text(
+            text = stringResource(id = R.string.ab1_inversions),
+            style = MaterialTheme.typography.h3,
+            modifier = Modifier.paddingFromBaseline(
+                top = 24.dp, bottom = 8.dp
+            ),
+
+        )
+
+    }
+
 }
 
 // Step: Favorite collection card - Material Surface
@@ -160,7 +191,9 @@ fun SearchBarPreview() {
 fun AlignYourBodyElementPreview() {
     MySootheTheme {
         AlignYourBodyElement(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
+            text = R.string.ab1_inversions,
+            drawable = R.drawable.ab1_inversions
         )
     }
 }
