@@ -23,6 +23,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -144,7 +146,19 @@ fun FavoriteCollectionCard(
 fun AlignYourBodyRow(
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    //스크롤 가능한 행을 구현(LazyRow)
+    LazyRow(
+        //spacedBy:항목 사이에 8dp 간격추가
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        //상위 목록의 경계 내에서 콘텐츠를 자르지 않고 스크롤할 수 있음
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
+    ) {
+        //lazy목록, AlignYourBodyElement 컴포저블을 내보냄
+        items(alignYourBodyData) { item ->
+            AlignYourBodyElement(drawable = item.drawable, text = item.text)
+        }
+    }
 }
 
 // Step: Favorite collections grid - LazyGrid
